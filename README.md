@@ -4,8 +4,11 @@ Branch Prediction Simulator
 ## Build instructions:
 
 > mkdir build
+
 > cd build
+
 > cmake ..
+
 > make
 
 ## Run the simulator
@@ -18,5 +21,6 @@ For example:
 Example output for the gzip.trace using Gshare:
 
 > Branches in Trace: 3668480
+
 > Misprediction Rate: 405222/3668480 = 11.05
 
