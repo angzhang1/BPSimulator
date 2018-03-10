@@ -54,7 +54,9 @@ int main(int argc, char** argv) {
     cout << "Running naive simulator! " << endl;
   }
 
-  bp->run(kMemLimit, *trace_input);
+  // Used cout to print to console, we can use ofstream to write the result to a
+  // file, if desired.
+  bp->run(kMemLimit, *trace_input, cout);
 
   delete bp;
 

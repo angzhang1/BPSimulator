@@ -13,7 +13,13 @@ class BranchPredictor {
 
   // This is the real main routine that runs the simulation with respect to a
   // memory limit and a trace file
-  void run(uint32_t mem_limit, std::istream& trace);
+  /**
+  @param mem_limit
+  @param trace, the input, could be a file input or a (cin)
+  @param output, the output stream, could be a file output or standard output
+  (cout)
+  */
+  void run(uint32_t mem_limit, std::istream& trace, std::ostream& output);
 
  protected:
   virtual bool init(uint32_t mem_limit) = 0;
@@ -22,7 +28,9 @@ class BranchPredictor {
 
   virtual void trainPredictor(uint32_t pc, bool outcome) = 0;
 
-  virtual void displayResults(uint32_t num_branch, uint32_t num_miss_predicts);
+  virtual std::ostream& displayResults(std::ostream& output,
+                                       uint32_t num_branch,
+                                       uint32_t num_miss_predicts);
 };
 
 class Naive : public BranchPredictor {

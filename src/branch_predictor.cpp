@@ -18,28 +18,32 @@ bool ReadBranches(istream& trace_stream, uint32_t* pc, bool* outcome) {
     trace_stream.read((char*)pc, sizeof(uint32_t));
 
     char outcome_int = 0;
-    trace_stream.read(&outcome_int, sizeof(outcome_int));
-    if (outcome_int == 0) {
-      *outcome = false;
-    } else {
-      *outcome = true;
+    if (trace_stream.good()) {
+      trace_stream.read(&outcome_int, sizeof(outcome_int));
+      if (outcome_int == 0) {
+        *outcome = false;
+      } else {
+        *outcome = true;
+      }
+      return true;
     }
-    return true;
+    return false;
   }
 
   return false;
 }
 
-void BranchPredictor::displayResults(uint32_t num_branch,
-                                     uint32_t num_miss_predicts) {
-  cout << "Branches in Trace: " << num_branch << endl;
-  cout << "Misprediction Rate: " << num_miss_predicts << "/" << num_branch
-       << setprecision(4) << " = "
-       << ((double)num_miss_predicts / (double)num_branch) * 100 << endl;
+ostream& BranchPredictor::displayResults(ostream& output, uint32_t num_branch,
+                                         uint32_t num_miss_predicts) {
+  output << "Branches in Trace: " << num_branch << endl;
+  output << "Misprediction Rate: " << num_miss_predicts << "/" << num_branch
+         << setprecision(4) << " = "
+         << ((double)num_miss_predicts / (double)num_branch) * 100 << endl;
+  return output;
 }
 
 // Run branch predictor simulator main routine
-void BranchPredictor::run(uint32_t mem_limit, istream& trace) {
+void BranchPredictor::run(uint32_t mem_limit, istream& trace, ostream& output) {
   init(mem_limit);
 
   // Read each branch from the trace
@@ -60,7 +64,7 @@ void BranchPredictor::run(uint32_t mem_limit, istream& trace) {
     trainPredictor(pc, outcome);
   }
 
-  displayResults(num_branches, mis_preds);
+  displayResults(cout, num_branches, mis_preds);
 }
 
 bool Gshare::init(uint32_t mem_limit) {
