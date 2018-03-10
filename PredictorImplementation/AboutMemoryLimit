@@ -1,0 +1,5 @@
+For memoryLimit in the code, it is just the size for each table now.
+
+if memoryLimit is to be a limit on total memory, then:
+    in LocalHistPredictor, each table would be 1/2 size of the memoryLimit
+    in TournamentPredictor, each table would be 1/4 size of the memoryLimit
