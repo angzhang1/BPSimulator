@@ -6,6 +6,8 @@
 class BranchPredictor {
     protected:
         uint32_t memoryLimit;
+        uint32_t predictionTableAddrBits;
+        uint32_t pcMask;
         uint32_t numberOfBranch;
         uint32_t numberOfMisprediction;
     public:
@@ -15,8 +17,6 @@ class BranchPredictor {
 
 class BimodelPredictor : public BranchPredictor {
     private:
-        uint32_t predictionTableAddrBits;
-        uint32_t pcMask;
         uint32_t *predictionTable;
         bool makePrediction(uint32_t);
         void trainPredictor(uint32_t, bool);
@@ -28,8 +28,6 @@ class BimodelPredictor : public BranchPredictor {
 
 class LocalHistPredictor : public BranchPredictor {
     private:
-        uint32_t predictionTableAddrBits;
-        uint32_t pcMask;
         uint32_t *localHistTable;
         uint32_t *predictionTable;
         bool makePrediction(uint32_t);
@@ -42,8 +40,6 @@ class LocalHistPredictor : public BranchPredictor {
 
 class GsharePredictor : public BranchPredictor {
     private:
-        uint32_t predictionTableAddrBits;
-        uint32_t pcMask;
         uint32_t globalHistReg;
         uint32_t *predictionTable;
         bool makePrediction(uint32_t);
@@ -56,8 +52,6 @@ class GsharePredictor : public BranchPredictor {
 
 class TournamentPredictor : public BranchPredictor {
     private:
-        uint32_t predictionTableAddrBits;
-        uint32_t pcMask;
         uint32_t globalHistReg;
         uint32_t *localHistTable;
         uint32_t *localHistPredictionTable;
