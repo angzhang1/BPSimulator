@@ -13,7 +13,7 @@ class BranchPredictor {
 
   // This is the real main routine that runs the simulation with respect to a
   // memory limit and a trace file
-  void run(uint32_t mem_limit, const std::string& trace_file_name);
+  void run(uint32_t mem_limit, std::istream& trace);
 
  protected:
   virtual bool init(uint32_t mem_limit) = 0;

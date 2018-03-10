@@ -13,7 +13,7 @@
 using namespace std;
 
 // Helper functions for reading file
-bool ReadBranches(ifstream& trace_stream, uint32_t* pc, bool* outcome) {
+bool ReadBranches(istream& trace_stream, uint32_t* pc, bool* outcome) {
   if (trace_stream.good()) {
     trace_stream.read((char*)pc, sizeof(uint32_t));
 
@@ -39,24 +39,8 @@ void BranchPredictor::displayResults(uint32_t num_branch,
 }
 
 // Run branch predictor simulator main routine
-void BranchPredictor::run(uint32_t mem_limit,
-                          const std::string& trace_file_name) {
+void BranchPredictor::run(uint32_t mem_limit, istream& trace) {
   init(mem_limit);
-
-  // Open trace file as binary file
-  ifstream trace(trace_file_name, ios::in | ios::binary);
-
-  uint32_t num_instructions = 0;
-  if (trace.is_open()) {
-    trace.read((char*)&num_instructions, sizeof(num_instructions));
-    num_instructions = ntohl(num_instructions);
-
-    // cout << "Number of instructions: " << num_instructions << endl;
-
-  } else {
-    cerr << "Unable to open file" << endl;
-    return;
-  }
 
   // Read each branch from the trace
   uint32_t pc = 0;

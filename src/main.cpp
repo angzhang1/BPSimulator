@@ -11,10 +11,33 @@ int main(int argc, char** argv) {
   if (argc == 3) {
     file_name = argv[2];
     predictor = argv[1];
+  } else if (argc == 2) {
+    predictor = argv[1];
   } else {
     cout << "Usage:" << endl;
     cout << argv[0] << " [predictor type] [trace file name]" << endl;
     return 1;
+  }
+
+  istream* trace_input = nullptr;
+  ifstream trace_file;
+  if (!file_name.empty()) {
+    // Open trace file as binary file
+    trace_file.open(file_name, ios::in | ios::binary);
+
+    uint32_t num_instructions = 0;
+    if (trace_file.good()) {  // consume the number of instruction field
+      trace_file.read((char*)&num_instructions, sizeof(num_instructions));
+      num_instructions = ntohl(num_instructions);
+    } else {
+      cerr << "Unable to open file" << endl;
+      return 1;
+    }
+
+    trace_input = &trace_file;
+  } else {
+    // read from cin
+    trace_input = &cin;
   }
 
   BranchPredictor* bp = nullptr;
@@ -31,7 +54,7 @@ int main(int argc, char** argv) {
     cout << "Running naive simulator! " << endl;
   }
 
-  bp->run(kMemLimit, file_name);
+  bp->run(kMemLimit, *trace_input);
 
   delete bp;
 
