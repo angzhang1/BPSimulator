@@ -19,8 +19,13 @@ For example:
 > ./simulator Gshare ../Traces/gzip.trace
 
 Example output for the gzip.trace using Gshare:
+```
+Branches in Trace: 3668480
+Misprediction Rate: 405222/3668480 = 11.05
+```
 
-> Branches in Trace: 3668480
+### Process all traces using pipes
 
-> Misprediction Rate: 405222/3668480 = 11.05
+For example
+> ls *.trace | xargs -L 1 ../BPSimulator/simulator Tournament > ../tournament_256.csv
 
