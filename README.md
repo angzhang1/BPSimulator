@@ -29,3 +29,6 @@ Misprediction Rate: 405222/3668480 = 11.05
 For example
 > ls *.trace | xargs -L 1 ../BPSimulator/simulator Tournament > ../tournament_256.csv
 
+## Result Visualization
+
+![32KB Result](https://github.com/angzhang1/BPSimulator/blob/master/miss-prediction-rate_32.png)
